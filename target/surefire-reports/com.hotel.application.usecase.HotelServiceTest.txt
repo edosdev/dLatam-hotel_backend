@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.hotel.application.usecase.HotelServiceTest
--------------------------------------------------------------------------------
-Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.516 s -- in com.hotel.application.usecase.HotelServiceTest

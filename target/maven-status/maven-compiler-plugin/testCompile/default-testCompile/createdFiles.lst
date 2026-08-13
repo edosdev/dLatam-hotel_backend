@@ -1,5 +1,0 @@
-com/hotel/application/usecase/HotelServiceTest.class
-com/hotel/domain/entity/RoomTest.class
-com/hotel/domain/entity/ReservationTest.class
-com/hotel/domain/valueobject/ValueObjectsTest.class
-com/hotel/infrastructure/persistence/InfrastructureTest.class
