@@ -24,7 +24,7 @@ Microservicio de gestión de reservas de hotel construido con **Spring Boot**, *
 ## 🔗 Repositorios de Referencia
 
 - **Backend (este repo)**: [dLatam-hotel_backend](https://github.com/edosdev/dLatam-hotel_backend) — Spring Boot + PostgreSQL + Clean Architecture
-- **Frontend (Hito 2)**: [dLatam-hito2_Hotel_Front](https://github.com/edosdev/dLatam-hito2_Hotel_Front) — TypeScript Vanilla + Vite
+- **Frontend**: [dLatam-hito2_Hotel_Front](https://github.com/edosdev/dLatam-hito2_Hotel_Front) — TypeScript Vanilla + Vite
 
 ---
 
@@ -54,7 +54,7 @@ mvn spring-boot:run
 ### 4. Iniciar la Interfaz Web Frontend
 
 ```bash
-cd ../Hito\ 2/Hotel/
+cd ../Hotel/
 npm install
 npm run dev
 ```
