@@ -23,8 +23,8 @@ Microservicio de gestión de reservas de hotel construido con **Spring Boot**, *
 
 ## 🔗 Repositorios de Referencia
 
-- **Core de Dominio / Hito 1**: Este repositorio
-- **Frontend Vite + TS / Hito 2**: [hito2/Hotel](../Hito%202/Hotel/)
+- **Backend (este repo)**: [dLatam-hotel_backend](https://github.com/edosdev/dLatam-hotel_backend) — Spring Boot + PostgreSQL + Clean Architecture
+- **Frontend (Hito 2)**: [dLatam-hito2_Hotel_Front](https://github.com/edosdev/dLatam-hito2_Hotel_Front) — TypeScript Vanilla + Vite
 
 ---
 
