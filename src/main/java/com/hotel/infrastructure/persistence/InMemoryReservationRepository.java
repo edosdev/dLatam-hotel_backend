@@ -2,6 +2,7 @@ package com.hotel.infrastructure.persistence;
 
 import com.hotel.domain.entity.Reservation;
 import com.hotel.domain.repository.ReservationRepository;
+import org.springframework.context.annotation.Profile;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +10,9 @@ import java.util.Optional;
 
 /**
  * Adaptador de infraestructura para almacenamiento de reservas en memoria.
+ * Solo se activa en el perfil 'test' o 'console'.
  */
+@Profile({"test", "console"})
 public class InMemoryReservationRepository implements ReservationRepository {
 
     private final Map<String, Reservation> database = new HashMap<>();

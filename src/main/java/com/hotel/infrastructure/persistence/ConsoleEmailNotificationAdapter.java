@@ -1,10 +1,15 @@
 package com.hotel.infrastructure.persistence;
 
 import com.hotel.domain.repository.EmailNotificationService;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 
 /**
  * Adaptador de infraestructura que implementa notificaciones enviadas a la consola.
+ * Solo se activa en el perfil 'test' o 'console'.
  */
+@Service
+@Profile({"test", "console"})
 public class ConsoleEmailNotificationAdapter implements EmailNotificationService {
 
     @Override

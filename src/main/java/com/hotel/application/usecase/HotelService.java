@@ -4,11 +4,14 @@ import com.hotel.domain.entity.Reservation;
 import com.hotel.domain.repository.EmailNotificationService;
 import com.hotel.domain.repository.ReservationRepository;
 import com.hotel.domain.repository.RoomRepository;
+import org.springframework.stereotype.Service;
 
 /**
  * Fachada de aplicación que mantiene compatibilidad con la API de HotelService del Hito 1,
  * delegando la ejecución en casos de uso cohesivos e independientes.
+ * Anotada con @Service para ser gestionada por Spring como un bean singleton.
  */
+@Service
 public class HotelService {
 
     private final MakeReservationUseCase makeReservationUseCase;
