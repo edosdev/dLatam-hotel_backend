@@ -4,7 +4,9 @@ import com.hotel.domain.entity.Reservation;
 import com.hotel.domain.repository.ReservationRepository;
 import org.springframework.context.annotation.Profile;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -23,6 +25,11 @@ public class InMemoryReservationRepository implements ReservationRepository {
             return Optional.empty();
         }
         return Optional.ofNullable(database.get(id));
+    }
+
+    @Override
+    public List<Reservation> findAll() {
+        return new ArrayList<>(database.values());
     }
 
     @Override

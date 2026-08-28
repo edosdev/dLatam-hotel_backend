@@ -1,9 +1,9 @@
 package com.hotel.infrastructure.web.controller;
 
+import com.hotel.application.usecase.HotelService;
 import com.hotel.domain.entity.Room;
-import com.hotel.domain.exception.RoomNotFoundException;
+import com.hotel.domain.exception.InvalidReservationException;
 import com.hotel.domain.repository.RoomRepository;
-import com.hotel.domain.valueobject.Price;
 import com.hotel.domain.valueobject.RoomNumber;
 import com.hotel.infrastructure.web.dto.RoomRequest;
 import com.hotel.infrastructure.web.dto.RoomResponse;
@@ -17,12 +17,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Controlador REST para gestión de habitaciones de hotel.
@@ -30,13 +27,38 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/v1/rooms")
+@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:3000"})
 @Tag(name = "Habitaciones", description = "Gestión de habitaciones del hotel")
 public class RoomController {
 
+    private final HotelService hotelService;
     private final RoomRepository roomRepository;
 
-    public RoomController(RoomRepository roomRepository) {
+    public RoomController(HotelService hotelService, RoomRepository roomRepository) {
+        this.hotelService = hotelService;
         this.roomRepository = roomRepository;
+    }
+
+    /**
+     * Lista todas las habitaciones.
+     */
+    @GetMapping
+    @Operation(summary = "Listar habitaciones", description = "Obtiene todas las habitaciones del hotel")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Lista de habitaciones",
+                    content = @Content(schema = @Schema(implementation = RoomResponse.class)))
+    })
+    public ResponseEntity<List<RoomResponse>> listAll() {
+        List<RoomResponse> rooms = hotelService.listAllRooms().stream()
+                .map(room -> new RoomResponse(
+                        room.getId(),
+                        room.getRoomNumber().value(),
+                        room.getType().name(),
+                        room.getPricePerNight().value(),
+                        room.isAvailable()
+                ))
+                .toList();
+        return ResponseEntity.ok(rooms);
     }
 
     /**
@@ -54,7 +76,7 @@ public class RoomController {
             @Parameter(description = "Número de la habitación") @PathVariable String roomNumber) {
 
         Room room = roomRepository.findByRoomNumber(new RoomNumber(roomNumber))
-                .orElseThrow(() -> new RoomNotFoundException("Habitación " + roomNumber + " no encontrada"));
+                .orElseThrow(() -> new com.hotel.domain.exception.RoomNotFoundException("Habitación " + roomNumber + " no encontrada"));
 
         RoomResponse response = new RoomResponse(
                 room.getId(),
@@ -83,7 +105,7 @@ public class RoomController {
 
         // Verificar que no exista una habitación con ese número
         if (roomRepository.findByRoomNumber(new RoomNumber(request.getRoomNumber())).isPresent()) {
-            throw new com.hotel.domain.exception.InvalidReservationException(
+            throw new InvalidReservationException(
                     "Ya existe una habitación con el número " + request.getRoomNumber());
         }
 

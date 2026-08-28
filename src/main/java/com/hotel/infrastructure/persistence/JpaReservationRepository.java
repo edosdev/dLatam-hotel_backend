@@ -12,6 +12,7 @@ import com.hotel.infrastructure.persistence.repository.ReservationJpaRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -36,6 +37,13 @@ public class JpaReservationRepository implements ReservationRepository {
         }
         return jpaRepository.findById(id)
                 .map(this::toDomain);
+    }
+
+    @Override
+    public List<Reservation> findAll() {
+        return jpaRepository.findAll().stream()
+                .map(this::toDomain)
+                .toList();
     }
 
     @Override

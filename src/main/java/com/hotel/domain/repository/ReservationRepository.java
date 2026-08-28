@@ -1,6 +1,7 @@
 package com.hotel.domain.repository;
 
 import com.hotel.domain.entity.Reservation;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -8,5 +9,6 @@ import java.util.Optional;
  */
 public interface ReservationRepository {
     Optional<Reservation> findById(String id);
+    List<Reservation> findAll();
     void save(Reservation reservation);
 }

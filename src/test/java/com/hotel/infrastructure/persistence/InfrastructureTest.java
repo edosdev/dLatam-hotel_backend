@@ -7,6 +7,7 @@ import com.hotel.domain.valueobject.RoomType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,6 +41,25 @@ class InfrastructureTest {
     }
 
     @Test
+    @DisplayName("Should test InMemoryRoomRepository findAll")
+    void testInMemoryRoomRepositoryFindAll() {
+        InMemoryRoomRepository repo = new InMemoryRoomRepository();
+
+        // Empty initially
+        List<Room> emptyResult = repo.findAll();
+        assertTrue(emptyResult.isEmpty());
+
+        // Add rooms and verify findAll
+        Room room1 = new Room("R-1", "101", RoomType.SINGLE, 50.0, true);
+        Room room2 = new Room("R-2", "201", RoomType.DOUBLE, 80.0, true);
+        repo.save(room1);
+        repo.save(room2);
+
+        List<Room> result = repo.findAll();
+        assertEquals(2, result.size());
+    }
+
+    @Test
     @DisplayName("Should test InMemoryReservationRepository save and query operations")
     void testInMemoryReservationRepository() {
         InMemoryReservationRepository repo = new InMemoryReservationRepository();
@@ -62,6 +82,25 @@ class InfrastructureTest {
         // Find by null ID
         Optional<Reservation> foundNull = repo.findById(null);
         assertTrue(foundNull.isEmpty());
+    }
+
+    @Test
+    @DisplayName("Should test InMemoryReservationRepository findAll")
+    void testInMemoryReservationRepositoryFindAll() {
+        InMemoryReservationRepository repo = new InMemoryReservationRepository();
+
+        // Empty initially
+        List<Reservation> emptyResult = repo.findAll();
+        assertTrue(emptyResult.isEmpty());
+
+        // Add reservations and verify findAll
+        Reservation r1 = new Reservation("RES-1", "Maria", "101", 3, 50.0);
+        Reservation r2 = new Reservation("RES-2", "Juan", "201", 2, 80.0);
+        repo.save(r1);
+        repo.save(r2);
+
+        List<Reservation> result = repo.findAll();
+        assertEquals(2, result.size());
     }
 
     @Test

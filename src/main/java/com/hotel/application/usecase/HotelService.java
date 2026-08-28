@@ -1,10 +1,13 @@
 package com.hotel.application.usecase;
 
 import com.hotel.domain.entity.Reservation;
+import com.hotel.domain.entity.Room;
 import com.hotel.domain.repository.EmailNotificationService;
 import com.hotel.domain.repository.ReservationRepository;
 import com.hotel.domain.repository.RoomRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Fachada de aplicación que mantiene compatibilidad con la API de HotelService del Hito 1,
@@ -17,6 +20,8 @@ public class HotelService {
     private final MakeReservationUseCase makeReservationUseCase;
     private final CancelReservationUseCase cancelReservationUseCase;
     private final GetReservationDetailsUseCase getReservationDetailsUseCase;
+    private final ListReservationsUseCase listReservationsUseCase;
+    private final ListRoomsUseCase listRoomsUseCase;
 
     // Constructor que recibe las interfaces puras de dominio
     public HotelService(
@@ -36,6 +41,8 @@ public class HotelService {
         this.makeReservationUseCase = new MakeReservationUseCase(roomRepository, reservationRepository, emailNotificationService);
         this.cancelReservationUseCase = new CancelReservationUseCase(roomRepository, reservationRepository, emailNotificationService);
         this.getReservationDetailsUseCase = new GetReservationDetailsUseCase(reservationRepository);
+        this.listReservationsUseCase = new ListReservationsUseCase(reservationRepository);
+        this.listRoomsUseCase = new ListRoomsUseCase(roomRepository);
     }
 
     // Método para crear una nueva reserva
@@ -51,5 +58,15 @@ public class HotelService {
     // Método para obtener los detalles de una reserva
     public Reservation getReservationDetails(String reservationId) {
         return getReservationDetailsUseCase.execute(reservationId);
+    }
+
+    // Método para listar todas las reservas
+    public List<Reservation> listAllReservations() {
+        return listReservationsUseCase.execute();
+    }
+
+    // Método para listar todas las habitaciones
+    public List<Room> listAllRooms() {
+        return listRoomsUseCase.execute();
     }
 }

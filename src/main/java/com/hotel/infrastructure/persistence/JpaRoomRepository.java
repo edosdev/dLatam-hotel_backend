@@ -2,13 +2,14 @@ package com.hotel.infrastructure.persistence;
 
 import com.hotel.domain.entity.Room;
 import com.hotel.domain.repository.RoomRepository;
+import com.hotel.domain.valueobject.Price;
 import com.hotel.domain.valueobject.RoomNumber;
-import com.hotel.domain.valueobject.RoomType;
 import com.hotel.infrastructure.persistence.entity.RoomEntity;
 import com.hotel.infrastructure.persistence.repository.RoomJpaRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -36,6 +37,13 @@ public class JpaRoomRepository implements RoomRepository {
     }
 
     @Override
+    public List<Room> findAll() {
+        return jpaRepository.findAll().stream()
+                .map(this::toDomain)
+                .toList();
+    }
+
+    @Override
     public void save(Room room) {
         if (room != null) {
             jpaRepository.save(toEntity(room));
@@ -48,7 +56,7 @@ public class JpaRoomRepository implements RoomRepository {
                 entity.getId(),
                 new RoomNumber(entity.getRoomNumber()),
                 entity.getType(),
-                new com.hotel.domain.valueobject.Price(entity.getPricePerNight()),
+                new Price(entity.getPricePerNight()),
                 entity.getAvailable()
         );
     }

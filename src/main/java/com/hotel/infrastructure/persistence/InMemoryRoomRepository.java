@@ -5,7 +5,9 @@ import com.hotel.domain.repository.RoomRepository;
 import com.hotel.domain.valueobject.RoomNumber;
 import org.springframework.context.annotation.Profile;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -24,6 +26,11 @@ public class InMemoryRoomRepository implements RoomRepository {
             return Optional.empty();
         }
         return Optional.ofNullable(database.get(roomNumber));
+    }
+
+    @Override
+    public List<Room> findAll() {
+        return new ArrayList<>(database.values());
     }
 
     @Override
