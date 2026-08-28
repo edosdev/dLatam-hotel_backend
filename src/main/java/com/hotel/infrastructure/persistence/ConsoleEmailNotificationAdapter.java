@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
  * Solo se activa en el perfil 'test' o 'console'.
  */
 @Service
-@Profile({"test", "console"})
+@Profile({"test", "console", "dev"})
 public class ConsoleEmailNotificationAdapter implements EmailNotificationService {
 
     @Override
