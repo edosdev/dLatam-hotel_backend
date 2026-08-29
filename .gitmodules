@@ -1,0 +1,3 @@
+[submodule "Hotel"]
+	path = Hotel
+	url = https://github.com/edosdev/dLatam-hito2_Hotel_Front.git
